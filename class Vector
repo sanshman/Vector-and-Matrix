@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+class Vector 
+{
+private:
+	int x;
+	int y;
+	int z;
+public:
+	Vector() // Конструктор по умолчанию 
+	{
+		x = 1;
+		y = 0;
+		z = 0;
+	}
+	Vector(int _x, int _y, int _z) // Конструктор с параметрами
+	{
+		x = _x;
+		y = _y;
+		z = _z;
+	}
+	Vector operator + (const Vector& vec) // Оператор сложения
+	{
+		return Vector(this->x + vec.x, this->y + vec.y, this->z + vec.z);
+	}
+	Vector operator = (const Vector& vec) // Оператор присваивания
+	{
+		if (&vec == this)
+			return *this;
+		return Vector(this->x = vec.x, this->y = vec.y, this->z = vec.z);
+	}
+	friend ostream& operator << (ostream& s, const Vector& vec) // Оператор вывода 
+	{
+		return cout << "Coordinates: X = " << vec.x << ", Y = " << vec.y << ", Z = " << vec.z << endl;
+	}
+};
+
+int main()
+{
+	Vector v1(17, 2, 8);
+	Vector v2(1, 7, 8);
+	cout << v1 << endl;
+	cout << v2 << endl;
+	cout << v1 + v2 << endl;
+	return 0;
+}
