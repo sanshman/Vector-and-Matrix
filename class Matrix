@@ -1,0 +1,79 @@
+#include <iostream>
+using namespace std;
+
+class Matrix
+{
+private:
+	int** arr;
+	int n; // Строки
+	int m; // Столбцы
+public:
+	Matrix() // Конструктор по умолчанию
+	{
+		n = 0;
+		m = 0;
+		arr = nullptr;
+	}
+	Matrix(int _n, int _m) // Конструктор с параметрами
+	{
+		n = _n;
+		m = _m;
+		arr = (int**) new int* [n]; // Выделение памяти под массив из указателей
+		for (int i = 0; i < n; i++)
+			arr[i] = (int*) new int[m];
+		for (int i = 0; i < n; i++) // Заполняем массив нулями
+		{
+			for (int j = 0; j < m; j++)
+			{
+				arr[i][j] = rand()%40;
+			}
+		}
+	}
+	void copy(const Matrix& matr) // Конструктор копирования
+	{
+		for (int i = 0; i < n; i++) // Освобождаем память
+			delete[] arr[i];
+		delete[] arr;
+		arr = new int*[n]; // Создаем новый массив
+		for (int i = 0; i < n; i++)
+			arr[i] = new int[m];
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				arr[i][j] = matr.arr[i][j];
+			}
+		}
+	}
+	void print() // Конструктор печати
+	{
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				cout << arr[i][j] << "\t";
+			}
+			cout << endl;
+		}
+	}
+	Matrix operator = (const Matrix &matr) // Оператор присваивания
+	{
+		copy(matr);
+		return *this;
+	}
+	friend ostream& operator <<(ostream &s , Matrix &matr) // Оператор вывода
+	{
+		matr.print();
+		return (s);
+	}
+
+};
+
+int main()
+{
+	Matrix m1(5, 5);
+	Matrix m2(5, 5);
+	cout << m1 << endl;
+	cout << m2 << endl;
+	return 0;
+}
