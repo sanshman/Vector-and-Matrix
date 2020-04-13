@@ -78,31 +78,56 @@ public:
 	}
 	friend Matrix operator + (Matrix& a, Matrix& b) // Оператор сложения
 	{
+		
 		int string = a.info_n();
 		int colomn = b.info_m();
 		Matrix temp(string, colomn);
-		for (int i = 0; i < string; i++)
+		try
 		{
-			for (int j = 0; j < colomn; j++)
+			if (string != colomn)
+				throw 1;
+			else
 			{
-				temp.arr[i][j] = a.arr[i][j] + b.arr[i][j];
+				for (int i = 0; i < string; i++)
+				{
+					for (int j = 0; j < colomn; j++)
+					{
+						temp.arr[i][j] = a.arr[i][j] + b.arr[i][j];
+					}
+				}
+				return temp;
 			}
 		}
-		return temp;
+		catch (int i)
+		{
+			cout << "Error #" << i << " Different size!" << endl;
+		}
 	}
 	friend Matrix operator - (Matrix& a, Matrix& b) // Опратор вычитания
 	{
 		int string = a.info_n();
 		int colomn = b.info_m();
 		Matrix temp(string, colomn);
-		for (int i = 0; i < string; i++)
+		try
 		{
-			for (int j = 0; j < colomn; j++)
+			if (string != colomn)
+				throw 1;
+			else
 			{
-				temp.arr[i][j] = a.arr[i][j] - b.arr[i][j];
+				for (int i = 0; i < string; i++)
+				{
+					for (int j = 0; j < colomn; j++)
+					{
+						temp.arr[i][j] = a.arr[i][j] - b.arr[i][j];
+					}
+				}
+				return temp;
 			}
 		}
-		return temp;
+		catch (int i)
+		{
+			cout << "Error #" << i << " Different size!" << endl;
+		}
 	}
 	friend ostream& operator << (ostream& s, Matrix& matr) // Оператор вывода
 	{
