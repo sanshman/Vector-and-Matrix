@@ -1,10 +1,27 @@
 #include <iostream>
 using namespace std;
 
+/*Matrix multiply(Matrix a, Matrix b, int n1, int m1, int n2, int m2)
+{
+	int string = a.info_n();
+	int colomn = b.info_m();
+	Matrix res(string, colomn);
+	for (int i = 0; i < string; i++)
+	{
+		for (int j = 0; j < colomn; j++)
+		{
+			res[i][j] = 0;
+			for (int k = 0; k < m1; k++)
+				res[i][j] += a[i][k] * b[k][j];
+		}
+	}
+	return res;
+}*/
+
 class Matrix
 {
 private:
-	int** arr;
+	int** arr; // Двумерный массив
 	int n; // Строки
 	int m; // Столбцы
 public:
@@ -21,11 +38,11 @@ public:
 		arr = (int**) new int* [n]; // Выделение памяти под массив из указателей
 		for (int i = 0; i < n; i++)
 			arr[i] = (int*) new int[m];
-		for (int i = 0; i < n; i++) // Заполняем массив рандомными числами в пределах 40
+		for (int i = 0; i < n; i++) // Заполняем массив нулями
 		{
 			for (int j = 0; j < m; j++)
 			{
-				arr[i][j] = rand() % 40;
+				arr[i][j] = 0;
 			}
 		}
 	}
@@ -56,7 +73,7 @@ public:
 			cout << endl;
 		}
 	}
-	void scan() // Конструктор сканирования
+	void scan() // Конструктор ввода
 	{
 		cout << "Enter element matrix:" << endl;
 		for (int i = 0; i < m; i++)
@@ -129,6 +146,19 @@ public:
 			cout << "Error #" << i << " Different size!" << endl;
 		}
 	}
+	/*friend Matrix operator * (Matrix& a, Matrix& b)
+	{
+		int string = a.info_n();
+		int colomn = a.info_m();
+		int string_1 = b.info_n();
+		int colomn_1 = b.info_m();
+		Matrix res(string, colomn_1);
+		Matrix m1(string, colomn);
+		Matrix m2(string_1, colomn_1);
+		res = multiply(m1, m2, string, colomn, string_1, colomn_1);
+		return res;
+	}*/
+	Matrix operator*(Matrix& tmp);
 	friend ostream& operator << (ostream& s, Matrix& matr) // Оператор вывода
 	{
 		matr.print();
@@ -140,3 +170,25 @@ public:
 		return s;
 	}
 };
+
+Matrix Matrix::operator *(Matrix& m2)
+{
+	Matrix temp;
+	temp.n = this->n;
+	temp.m = this->m;
+	int i, j, k;
+	temp.arr = new int* [temp.n];
+	for (i = 0; i < temp.n; ++i)
+	{
+		temp.arr[i] = new int[temp.m];
+		for (j = 0; j < temp.m; ++j)
+		{
+			temp.arr[i][j] = 0;
+			for (k = 0; k < temp.m; ++k)
+				{
+					temp.arr[i][j] = temp.arr[i][j] + (this->arr[i][k] * m2.arr[k][j]);
+				}
+		}
+	}
+	return temp;
+}
