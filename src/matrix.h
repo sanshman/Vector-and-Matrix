@@ -1,44 +1,27 @@
 #include <iostream>
 using namespace std;
 
-/*Matrix multiply(Matrix a, Matrix b, int n1, int m1, int n2, int m2)
-{
-	int string = a.info_n();
-	int colomn = b.info_m();
-	Matrix res(string, colomn);
-	for (int i = 0; i < string; i++)
-	{
-		for (int j = 0; j < colomn; j++)
-		{
-			res[i][j] = 0;
-			for (int k = 0; k < m1; k++)
-				res[i][j] += a[i][k] * b[k][j];
-		}
-	}
-	return res;
-}*/
-
 class Matrix
 {
 private:
-	int** arr; // Двумерный массив
-	int n; // Строки
-	int m; // Столбцы
+	int** arr; // Г„ГўГіГ¬ГҐГ°Г­Г»Г© Г¬Г Г±Г±ГЁГў
+	int n; // Г‘ГІГ°Г®ГЄГЁ
+	int m; // Г‘ГІГ®Г«ГЎГ¶Г»
 public:
-	Matrix() // Конструктор по умолчанию
+	Matrix() // ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЇГ® ГіГ¬Г®Г«Г·Г Г­ГЁГѕ
 	{
 		n = 0;
 		m = 0;
 		arr = nullptr;
 	}
-	Matrix(int _n, int _m) // Конструктор с параметрами
+	Matrix(int _n, int _m) // ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г° Г± ГЇГ Г°Г Г¬ГҐГІГ°Г Г¬ГЁ
 	{
 		n = _n;
 		m = _m;
-		arr = (int**) new int* [n]; // Выделение памяти под массив из указателей
+		arr = (int**) new int* [n]; // Г‚Г»Г¤ГҐГ«ГҐГ­ГЁГҐ ГЇГ Г¬ГїГІГЁ ГЇГ®Г¤ Г¬Г Г±Г±ГЁГў ГЁГ§ ГіГЄГ Г§Г ГІГҐГ«ГҐГ©
 		for (int i = 0; i < n; i++)
 			arr[i] = (int*) new int[m];
-		for (int i = 0; i < n; i++) // Заполняем массив нулями
+		for (int i = 0; i < n; i++) // Г‡Г ГЇГ®Г«Г­ГїГҐГ¬ Г¬Г Г±Г±ГЁГў Г­ГіГ«ГїГ¬ГЁ
 		{
 			for (int j = 0; j < m; j++)
 			{
@@ -46,12 +29,12 @@ public:
 			}
 		}
 	}
-	void copy(const Matrix& matr) // Конструктор копирования
+	void copy(const Matrix& matr) // ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЄГ®ГЇГЁГ°Г®ГўГ Г­ГЁГї
 	{
-		for (int i = 0; i < n; i++) // Освобождаем память
+		for (int i = 0; i < n; i++) // ГЋГ±ГўГ®ГЎГ®Г¦Г¤Г ГҐГ¬ ГЇГ Г¬ГїГІГј
 			delete[] arr[i];
 		delete[] arr;
-		arr = new int* [n]; // Создаем новый массив
+		arr = new int* [n]; // Г‘Г®Г§Г¤Г ГҐГ¬ Г­Г®ГўГ»Г© Г¬Г Г±Г±ГЁГў
 		for (int i = 0; i < n; i++)
 			arr[i] = new int[m];
 		for (int i = 0; i < n; i++)
@@ -62,7 +45,7 @@ public:
 			}
 		}
 	}
-	void print() // Конструктор печати
+	void print() // ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЇГҐГ·Г ГІГЁ
 	{
 		for (int i = 0; i < n; i++)
 		{
@@ -73,27 +56,27 @@ public:
 			cout << endl;
 		}
 	}
-	void scan() // Конструктор ввода
+	void scan() // ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГўГўГ®Г¤Г 
 	{
 		cout << "Enter element matrix:" << endl;
 		for (int i = 0; i < m; i++)
 			for (int j = 0; j < n; j++)
 				cin >> arr[i][j];
 	}
-	int info_n() // Получение количества строк
+	int info_n() // ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  Г±ГІГ°Г®ГЄ
 	{
 		return n;
 	};
-	int info_m() // Получение количества столбцов
+	int info_m() // ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  Г±ГІГ®Г«ГЎГ¶Г®Гў
 	{
 		return m;
 	};
-	Matrix operator = (const Matrix& matr) // Оператор присваивания
+	Matrix operator = (const Matrix& matr) // ГЋГЇГҐГ°Г ГІГ®Г° ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГї
 	{
 		copy(matr);
 		return *this;
 	}
-	friend Matrix operator + (Matrix& a, Matrix& b) // Оператор сложения
+	friend Matrix operator + (Matrix& a, Matrix& b) // ГЋГЇГҐГ°Г ГІГ®Г° Г±Г«Г®Г¦ГҐГ­ГЁГї
 	{
 		
 		int string = a.info_n();
@@ -120,7 +103,7 @@ public:
 			cout << "Error #" << i << " Different size!" << endl;
 		}
 	}
-	friend Matrix operator - (Matrix& a, Matrix& b) // Опратор вычитания
+	friend Matrix operator - (Matrix& a, Matrix& b) // ГЋГЇГ°Г ГІГ®Г° ГўГ»Г·ГЁГІГ Г­ГЁГї
 	{
 		int string = a.info_n();
 		int colomn = b.info_m();
@@ -146,25 +129,13 @@ public:
 			cout << "Error #" << i << " Different size!" << endl;
 		}
 	}
-	/*friend Matrix operator * (Matrix& a, Matrix& b)
-	{
-		int string = a.info_n();
-		int colomn = a.info_m();
-		int string_1 = b.info_n();
-		int colomn_1 = b.info_m();
-		Matrix res(string, colomn_1);
-		Matrix m1(string, colomn);
-		Matrix m2(string_1, colomn_1);
-		res = multiply(m1, m2, string, colomn, string_1, colomn_1);
-		return res;
-	}*/
 	Matrix operator*(Matrix& tmp);
-	friend ostream& operator << (ostream& s, Matrix& matr) // Оператор вывода
+	friend ostream& operator << (ostream& s, Matrix& matr) // ГЋГЇГҐГ°Г ГІГ®Г° ГўГ»ГўГ®Г¤Г 
 	{
 		matr.print();
 		return s;
 	}
-	friend istream& operator >> (istream& s, Matrix& matr) // Оператор ввода
+	friend istream& operator >> (istream& s, Matrix& matr) // ГЋГЇГҐГ°Г ГІГ®Г° ГўГўГ®Г¤Г 
 	{
 		matr.scan();
 		return s;
