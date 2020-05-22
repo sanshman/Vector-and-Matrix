@@ -76,19 +76,18 @@ public:
 		Matrix temp(string, colomn);
 		try
 		{
-			if (string != colomn)
-				throw 1;
-			else
+			if (string != colomn )
 			{
-				for (int i = 0; i < string; i++)
-				{
-					for (int j = 0; j < colomn; j++)
-					{
-						temp.arr[i][j] = a.arr[i][j] + b.arr[i][j];
-					}
-				}
-				return temp;
+				throw 777;
 			}
+			for (int i = 0; i < string; i++)
+			{
+				for (int j = 0; j < colomn; j++)
+				{
+					temp.arr[i][j] = a.arr[i][j] + b.arr[i][j];
+				}
+			}
+			return temp;
 		}
 		catch (int i)
 		{
@@ -103,18 +102,17 @@ public:
 		try
 		{
 			if (string != colomn)
-				throw 1;
-			else
 			{
-				for (int i = 0; i < string; i++)
-				{
-					for (int j = 0; j < colomn; j++)
-					{
-						temp.arr[i][j] = a.arr[i][j] - b.arr[i][j];
-					}
-				}
-				return temp;
+				throw 777;
 			}
+			for (int i = 0; i < string; i++)
+			{
+				for (int j = 0; j < colomn; j++)
+				{
+					temp.arr[i][j] = a.arr[i][j] - b.arr[i][j];
+				}
+			}
+			return temp;
 		}
 		catch (int i)
 		{
@@ -141,21 +139,34 @@ Matrix<T> Matrix<T>::operator *(Matrix& m2)
 	Matrix temp;
 	temp.n = this->n;
 	temp.m = this->m;
-	int i, j, k;
-	temp.arr = new T * [temp.n];
-	for (i = 0; i < temp.n; ++i)
+	try 
 	{
-		temp.arr[i] = new T[temp.m];
-		for (j = 0; j < temp.m; ++j)
+		if (m2.info_n() != temp.n)
 		{
-			temp.arr[i][j] = 0;
-			for (k = 0; k < temp.m; ++k)
+			throw 111;
+		}
+		else
+		{
+			temp.arr = new T * [temp.n];
+			for (int i = 0; i < temp.n; ++i)
 			{
-				temp.arr[i][j] = temp.arr[i][j] + (this->arr[i][k] * m2.arr[k][j]);
+				temp.arr[i] = new T[temp.m];
+				for (int j = 0; j < temp.m; ++j)
+				{
+					temp.arr[i][j] = 0;
+					for (int k = 0; k < temp.m; ++k)
+					{
+						temp.arr[i][j] = temp.arr[i][j] + (this->arr[i][k] * m2.arr[k][j]);
+					}
+				}
 			}
+			return temp;
 		}
 	}
-	return temp;
+	catch (int i)
+	{
+		cout << "Error #" << i << " Different size!" << endl;
+	}
 }
 
 template <class T>
@@ -176,7 +187,7 @@ public:
 		}
 		return result;
 	}
-	Matrix step_form(Matrix input) // Ступенчатый вид (метод Гаусса)
+	Matrix step_form(Matrix input) // Ступенчатый вид
 	{
 		int string = input.info_n();
 		int colomn = input.info_m();
@@ -195,8 +206,17 @@ public:
 		}
 		return result;
 	}
-	/*Matrix reverse(Matrix temp) // Обратная матрица
+	double determinate(Matrix input) // Вычисление определителя
 	{
-		return result;
-	}*/
+		int string = input.info_n();
+		int colomn = input.info_m();
+		Matrix det(string, colomn);
+		det = step_form(input);
+		double determinate = 1;
+		for (int i = 0; i < string; i++)
+		{
+			determinate *= det.arr[i][i];
+		}
+		return determinate;
+	}
 };

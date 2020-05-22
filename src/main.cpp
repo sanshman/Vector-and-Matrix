@@ -5,21 +5,20 @@ using namespace std;
 
 int main()
 {
-	Vector v1(17, 2, 8);
-	Vector v2(1, 7, 8);
-	Vector v3;
-	cout << v1 << endl;
-	cout << v2 << endl;
-	cout << v1 + v2 << endl;
-	cin >> v3;
-	cout << v3 << endl;
-	Matrix m1(3, 3);
-	Matrix m2(3, 3);
-	Matrix m3(4, 4);
+	Matrix<double> m1(2, 2);
+	cin >> m1;
 	cout << m1 << endl;
+	Matrix<double> m2(2, 2);
+	cin >> m2;
 	cout << m2 << endl;
-	cout << m1+m2 << endl;
-	cin >> m3;
-	cout << m3 << endl;
+	/*Operation*/
+		cout << "====={ Matrix_1 + Matrix_2 }=====\n" << m1+m2 << endl;
+		cout << "====={ Matrix_1 - Matrix_2 }=====\n" << m1-m2 << endl;
+		cout << "====={ Matrix_1 * Matrix_2 }=====\n" << m1*m2 << endl;
+	/*Function*/
+	Matrix_function<double> test;
+		cout << "===>> Transpose <<===\n" << test.transpose(m1) << endl;
+		cout << "===>> Step form <<===\n" << test.step_form(m1) << endl;
+		cout << "===>> Determinate <<===\n" << "D = " << test.determinate(m1) << endl;
 	return 0;
 }
